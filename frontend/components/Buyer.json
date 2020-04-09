@@ -1,0 +1,1 @@
+{"name": "Buyer", "dependencies": ["user", "order", "orderReview", "buyerFavoriteItem", "buyerSellerLike", "message", "itemReport", "sellerReport"]}
