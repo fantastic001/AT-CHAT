@@ -15,7 +15,7 @@ import javax.ws.rs.core.*;
 
 import java.util.Date;
 
-@Path("/hello")
+@Path("hello")
 public class Hello {
 	@Context private HttpServletRequest request;
 	@GET
