@@ -15,7 +15,7 @@ import javax.ws.rs.core.*;
 
 import java.util.Date;
 
-@Path("/hello")
+@Path("hello")
 public class Hello {
 	//@Context private HttpServletRequest request;
 
@@ -24,6 +24,7 @@ public class Hello {
 	}
 
 	@GET	
+	@Path("say")
 	@Produces("application/json")
 	public Result hello() {
 		Result r = new Result();

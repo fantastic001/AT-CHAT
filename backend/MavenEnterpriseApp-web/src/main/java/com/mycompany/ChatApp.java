@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 
-//@ApplicationPath("")
+@ApplicationPath("/rest")
 public class ChatApp extends Application {
 
 /*    
