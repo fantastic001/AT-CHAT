@@ -15,13 +15,19 @@ import javax.ws.rs.core.*;
 
 import java.util.Date;
 
-@Path("hello")
+@Path("/hello")
 public class Hello {
-	@Context private HttpServletRequest request;
-	@GET
-	@Produces("application/json")
-	public String hello() {
+	//@Context private HttpServletRequest request;
 
-		return "hello";
+	public Hello() {
+		System.out.println("******************* REST ENDPOINT");
+	}
+
+	@GET	
+	@Produces("application/json")
+	public Result hello() {
+		Result r = new Result();
+		r.setA(5);
+		return r;
 	}
 }

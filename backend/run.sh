@@ -5,7 +5,7 @@ THIS_DIR=$(readlink -f $(dirname $0))
 TARGET_PATH="$THIS_DIR/target"
 
 
-docker run \
+docker run --rm \
     --name at_chat_deploy \
     -v "$TARGET_PATH":/opt/jboss/wildfly/standalone/deployments/ \
     -p 5544:8080 \
