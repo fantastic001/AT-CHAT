@@ -37,6 +37,15 @@ public class UserManager {
         }
     }
 
+    public void logout(User user) {
+        for (User currentUser : this.users) {
+            if (user.getUsername().equals(currentUser.getUsername()) && user.getPassword().equals(currentUser.getPassword())) {
+                for (LoginListener listener : this.loginListeners) {
+                    listener.userLoggedOut(user);
+                }
+            }
+        }
+    }
     public void addLoginListener(LoginListener listener) {
         this.loginListeners.add(listener);
     }
