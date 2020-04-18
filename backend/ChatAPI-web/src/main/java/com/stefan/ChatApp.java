@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.stefan;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;

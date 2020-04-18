@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.stefan;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

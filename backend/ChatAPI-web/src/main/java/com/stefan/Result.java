@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.stefan;
 
 public class Result {
     private int a; 
