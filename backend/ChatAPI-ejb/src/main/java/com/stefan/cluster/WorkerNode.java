@@ -1,5 +1,9 @@
 package com.stefan.cluster;
 
+import java.util.Collection;
+import com.stefan.data.User;
+import com.stefan.user.UserManager;
+
 public class WorkerNode implements ControlInterface {
     
     
@@ -29,5 +33,10 @@ public class WorkerNode implements ControlInterface {
     @Override
     public void nodeRemoved(Node node) {
         
+    }
+
+    @Override
+    public Collection<User> getAllUsers() {
+        return UserManager.getInstance().getUsers();
     }
 }

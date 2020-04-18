@@ -13,8 +13,11 @@ public class Node {
 	
 	private String path; 
 	
+	private int state; // -=OK, 1=CRITICAL, 2=DOWN
+
 	public Node() 
 	{
+		this.state = 0; // OK
 	}
 	public Node(String _alias, String _hostname, int _port, String _path) {
 		super();
@@ -68,6 +71,14 @@ public class Node {
 	public void setPath(String newValue) 
 	{
 		this.path = newValue;
+	}
+
+	public void setState(int state) {
+		this.state = state; 
+	}
+
+	public int getState() {
+		return this.state;
 	}
 	
 }

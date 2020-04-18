@@ -1,8 +1,7 @@
 package com.stefan.cluster;
 
 import java.util.ArrayList;
-
-import javax.xml.soap.Node;
+import java.util.Collection;
 
 import com.stefan.user.UserManager;
 import com.stefan.data.User;
