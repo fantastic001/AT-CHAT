@@ -3,6 +3,7 @@ package com.stefan.user;
 import com.stefan.data.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.ListCellRenderer;
 
@@ -48,5 +49,9 @@ public class UserManager {
     }
     public void addLoginListener(LoginListener listener) {
         this.loginListeners.add(listener);
+    }
+
+    public Collection<User> getUsers() {
+        return this.users;
     }
 }
