@@ -18,7 +18,7 @@ public class MasterNode implements ControlInterface {
 
     @Override
     public void run() {
-
+        // pinging all nodes 
     }
 
     @Override
@@ -45,5 +45,14 @@ public class MasterNode implements ControlInterface {
                 nodes.remove(n);
             }
         }
+    }
+    @Override
+    public void onPing() {
+
+    }
+
+    @Override
+    public void onPong(Node node) {
+        
     }
 }

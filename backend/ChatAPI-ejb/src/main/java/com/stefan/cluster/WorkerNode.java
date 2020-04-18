@@ -39,4 +39,13 @@ public class WorkerNode implements ControlInterface {
     public Collection<User> getAllUsers() {
         return UserManager.getInstance().getUsers();
     }
+    @Override
+    public void onPing() {
+
+    }
+
+    @Override
+    public void onPong(Node node) {
+        
+    }
 }
