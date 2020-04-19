@@ -14,18 +14,28 @@ import javax.servlet.http.*;
 import javax.ws.rs.core.*;
 
 import java.util.Date;
+import java.util.Collection;
+
+import com.stefan.data.User;
+import com.stefan.user.UserManager;
 
 @Path("users")
 public class UsersEndpoint {
 	//@Context private HttpServletRequest request;
 
 
-	@GET	
-	@Path("say")
+	@POST
+	@Path("register")
 	@Produces("application/json")
-	public Result hello() {
-		Result r = new Result();
-		r.setA(5);
-		return r;
+	public User register(User user) {
+		UserManager.getInstance().registerUser(user);
+		return user;
+	}
+
+	@GET
+	@Path("registered")
+	@Produces("application/json")
+	public Collection<User> list() {
+		return UserManager.getInstance().getUsers();
 	}
 }
