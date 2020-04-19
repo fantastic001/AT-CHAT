@@ -51,4 +51,7 @@ public class MessageManager {
                 this.createMessage(from, user.getUsername(), subject, text);
         }
     }
+    public void broadcastMessage(Message message, Collection<User> users) {
+        this.broadcastMessage(message.getFromUsername(), message.getSubject(), message.getText(), users);
+    }
 }

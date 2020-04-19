@@ -21,7 +21,7 @@ import com.stefan.user.UserManager;
 
 @Path("users")
 public class UsersEndpoint {
-	//@Context private HttpServletRequest request;
+	@Context private HttpServletRequest request;
 
 
 	@POST
@@ -37,6 +37,8 @@ public class UsersEndpoint {
 	@Produces("application/json")
 	public User login(User user) {
 		UserManager.getInstance().login(user);
+		HttpSession session = request.getSession(true);
+		session.setAttribute("user", user);
 		return user;
 	}
 
@@ -52,5 +54,16 @@ public class UsersEndpoint {
 	@Produces("application/json")
 	public Collection<User> listLogged() {
 		return UserManager.getInstance().getOnlineUsers();
+	}
+	@DELETE
+	@Path("loggedIn")
+	@Produces("application/json")
+	public User logout() {
+		HttpSession session = request.getSession(true);
+		User user = (User) session.getAttribute("user");
+		if (user == null) return null;
+		UserManager.getInstance().logout(user);
+		session.setAttribute("user", null);
+		return user;
 	}
 }

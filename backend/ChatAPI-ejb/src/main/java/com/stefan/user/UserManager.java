@@ -27,20 +27,25 @@ public class UserManager {
         for (User u : this.users) {
             if (u.getUsername().equals(user.getUsername())) return;
         }
+        System.out.println("Registering user");
         this.users.add(user);
     }
 
     public void login(User user) {
         for (User currentUser : this.users) {
             if (user.getUsername().equals(currentUser.getUsername()) && user.getPassword().equals(currentUser.getPassword())) {
+                System.out.println("Logging user in");
                 for (LoginListener listener : this.loginListeners) {
                     listener.userLoggedIn(user);
-                    // if already logged in ignore it 
-                    int count = 0;
-                    for (User u : online) {
-                        if (u.getUsername().equals(user.getUsername())) count++;
-                    }
-                    if (count == 0) online.add(user);
+                }
+                // if already logged in ignore it 
+                int count = 0;
+                for (User u : online) {
+                    if (u.getUsername().equals(user.getUsername())) count++;
+                }
+                if (count == 0) {
+                    System.out.println("Adding user to online list");
+                    online.add(user);
                 }
             }
         }

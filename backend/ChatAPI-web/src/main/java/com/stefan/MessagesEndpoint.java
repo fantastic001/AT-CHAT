@@ -10,23 +10,47 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+
+import javax.annotation.Generated;
 import javax.servlet.http.*;
 import javax.ws.rs.core.*;
 
 import java.util.Date;
+import java.util.Collection;
+import com.stefan.data.Message;
+import com.stefan.data.User;
+import com.stefan.message.MessageManager; 
+import com.stefan.user.UserManager;
 
 @Path("messages")
 public class MessagesEndpoint {
-	//@Context private HttpServletRequest request;
+	@Context private HttpServletRequest request;
 
 
 
-	@GET	
-	@Path("say")
+	@POST
+	@Path("all")
 	@Produces("application/json")
-	public Result hello() {
-		Result r = new Result();
-		r.setA(5);
-		return r;
+	public Message all(Message message) {
+		MessageManager.getInstance().broadcastMessage(message, UserManager.getInstance().getUsers());
+		return message;
+	}
+
+	@POST
+	@Path("user")
+	@Produces("application/json")
+	public Message user(Message message) {
+		return MessageManager.getInstance().createMessage(
+				message.getFromUsername(), 
+				message.getToUsername(), 
+				message.getSubject(), 
+				message.getText()
+			);
+	}
+	@GET 
+	@Path("")
+	@Produces("application/json")
+	public Collection<Message> getInbox() {
+		return MessageManager.getInstance().getInbox((User) request.getSession().getAttribute("user"));
 	}
 }

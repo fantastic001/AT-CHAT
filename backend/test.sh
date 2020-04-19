@@ -15,9 +15,9 @@ function req() {
     data="$(for key in $keys; do echo "\"$key\""; echo "\"${json[$key]}\""; done | jq -cn 'reduce inputs as $i ({}; . + { ($i): input })')"
     # echo $data
     if [ -z "$data" ]; then 
-        curl -X $method -H "Content-Type: application/json" "localhost:5544/ChatAPI-web/rest$path"
+        curl -i -X $method -H "Content-Type: application/json" "localhost:5544/ChatAPI-web/rest$path" | jq
     else
-        curl -X $method -H "Content-Type: application/json" -d $data "localhost:5544/ChatAPI-web/rest$path"
+        curl -i -X $method -H "Content-Type: application/json" -d $data "localhost:5544/ChatAPI-web/rest$path" | jq
     fi
 }
 function expect() {
