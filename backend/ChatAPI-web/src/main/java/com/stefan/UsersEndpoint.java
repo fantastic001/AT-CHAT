@@ -32,10 +32,25 @@ public class UsersEndpoint {
 		return user;
 	}
 
+	@POST
+	@Path("login")
+	@Produces("application/json")
+	public User login(User user) {
+		UserManager.getInstance().login(user);
+		return user;
+	}
+
 	@GET
 	@Path("registered")
 	@Produces("application/json")
 	public Collection<User> list() {
 		return UserManager.getInstance().getUsers();
+	}
+	
+	@GET
+	@Path("loggedIn")
+	@Produces("application/json")
+	public Collection<User> listLogged() {
+		return UserManager.getInstance().getOnlineUsers();
 	}
 }

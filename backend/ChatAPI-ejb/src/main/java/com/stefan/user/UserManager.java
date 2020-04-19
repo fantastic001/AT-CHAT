@@ -10,9 +10,11 @@ import javax.swing.ListCellRenderer;
 public class UserManager {
     private ArrayList<User> users;
     private ArrayList<LoginListener> loginListeners;
+    private ArrayList<User> online;
     private static UserManager instance = null; 
     private UserManager() {
         this.users = new ArrayList<>();
+        online = new ArrayList<>();
         loginListeners = new ArrayList<>();
     }
 
@@ -33,6 +35,12 @@ public class UserManager {
             if (user.getUsername().equals(currentUser.getUsername()) && user.getPassword().equals(currentUser.getPassword())) {
                 for (LoginListener listener : this.loginListeners) {
                     listener.userLoggedIn(user);
+                    // if already logged in ignore it 
+                    int count = 0;
+                    for (User u : online) {
+                        if (u.getUsername().equals(user.getUsername())) count++;
+                    }
+                    if (count == 0) online.add(user);
                 }
             }
         }
@@ -43,9 +51,19 @@ public class UserManager {
             if (user.getUsername().equals(currentUser.getUsername()) && user.getPassword().equals(currentUser.getPassword())) {
                 for (LoginListener listener : this.loginListeners) {
                     listener.userLoggedOut(user);
+                    // remove it from logged users 
+                    for (User u : online) {
+                        if (u.getUsername().equals(user.getUsername())) {
+                            online.remove(u);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    public Collection<User> getOnlineUsers() {
+        return this.online;
     }
     public void addLoginListener(LoginListener listener) {
         this.loginListeners.add(listener);
