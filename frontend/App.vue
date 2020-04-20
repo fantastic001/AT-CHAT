@@ -47,7 +47,6 @@ export default {
 
         <router-link v-if="data.role != 'NOT_LOGGED'" to='/logout'>Log out</router-link>
         <router-link v-if="data.role == 'BUYER' || data.role == 'SELLER' || data.role == 'ADMIN'" to='/profile'>Profile</router-link>
-        <router-link to='/categoryList'>Categories</router-link>
 	<router-link to="/users">Users</router-link>
 	</div>
 	
