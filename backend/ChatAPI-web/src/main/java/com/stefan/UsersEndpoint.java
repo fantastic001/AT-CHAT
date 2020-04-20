@@ -18,6 +18,8 @@ import java.util.Collection;
 
 import com.stefan.data.User;
 import com.stefan.user.UserManager;
+import com.stefan.user.AuthErrorException;
+import com.stefan.user.UserExistsException;
 
 @Path("users")
 public class UsersEndpoint {
@@ -28,18 +30,27 @@ public class UsersEndpoint {
 	@Path("register")
 	@Produces("application/json")
 	public User register(User user) {
-		UserManager.getInstance().registerUser(user);
-		return user;
+		try {
+			UserManager.getInstance().registerUser(user);
+			return user;
+		}
+		catch (UserExistsException e) {
+			return null;
+		}
 	}
 
 	@POST
 	@Path("login")
 	@Produces("application/json")
 	public User login(User user) {
-		UserManager.getInstance().login(user);
-		HttpSession session = request.getSession(true);
-		session.setAttribute("user", user);
-		return user;
+		try {
+			UserManager.getInstance().login(user);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", user);
+			return user;
+		} catch (AuthErrorException e) {
+			return null;
+		}
 	}
 
 	@GET

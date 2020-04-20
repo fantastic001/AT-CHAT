@@ -23,15 +23,15 @@ public class UserManager {
         return UserManager.instance;
     }
 
-    public void registerUser(User user) {
+    public void registerUser(User user) throws UserExistsException {
         for (User u : this.users) {
-            if (u.getUsername().equals(user.getUsername())) return;
+            if (u.getUsername().equals(user.getUsername())) throw new UserExistsException();
         }
         System.out.println("Registering user");
         this.users.add(user);
     }
 
-    public void login(User user) {
+    public void login(User user) throws AuthErrorException {
         for (User currentUser : this.users) {
             if (user.getUsername().equals(currentUser.getUsername()) && user.getPassword().equals(currentUser.getPassword())) {
                 System.out.println("Logging user in");
@@ -47,8 +47,10 @@ public class UserManager {
                     System.out.println("Adding user to online list");
                     online.add(user);
                 }
+                return;
             }
         }
+        throw new AuthErrorException();
     }
 
     public void logout(User user) {
