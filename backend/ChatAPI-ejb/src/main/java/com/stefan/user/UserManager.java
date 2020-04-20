@@ -52,19 +52,21 @@ public class UserManager {
     }
 
     public void logout(User user) {
+        User found = null;
         for (User currentUser : this.users) {
             if (user.getUsername().equals(currentUser.getUsername()) && user.getPassword().equals(currentUser.getPassword())) {
                 for (LoginListener listener : this.loginListeners) {
                     listener.userLoggedOut(user);
-                    // remove it from logged users 
-                    for (User u : online) {
-                        if (u.getUsername().equals(user.getUsername())) {
-                            online.remove(u);
-                        }
+                }
+                // remove it from logged users 
+                for (User u : online) {
+                    if (u.getUsername().equals(user.getUsername())) {
+                        found = u;
                     }
                 }
             }
         }
+        if (found != null) online.remove(found);
     }
 
     public Collection<User> getOnlineUsers() {

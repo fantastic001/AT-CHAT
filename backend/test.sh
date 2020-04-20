@@ -1,5 +1,7 @@
 #!/bin/sh
 
+JS=""
+
 function req() {
     method=$1
     path="$2"
@@ -15,9 +17,9 @@ function req() {
     data="$(for key in $keys; do echo "\"$key\""; echo "\"${json[$key]}\""; done | jq -cn 'reduce inputs as $i ({}; . + { ($i): input })')"
     # echo $data
     if [ -z "$data" ]; then 
-        curl -i -X $method -H "Content-Type: application/json" "localhost:5544/ChatAPI-web/rest$path" | jq
+        curl -i -X $method -c cookies.txt -b cookies.txt -H "Content-Type: application/json" "localhost:5544/ChatAPI-web/rest$path" 
     else
-        curl -i -X $method -H "Content-Type: application/json" -d $data "localhost:5544/ChatAPI-web/rest$path" | jq
+        curl -i -X $method -c cookies.txt -b cookies.txt -H "Content-Type: application/json" -d $data "localhost:5544/ChatAPI-web/rest$path" 
     fi
 }
 function expect() {

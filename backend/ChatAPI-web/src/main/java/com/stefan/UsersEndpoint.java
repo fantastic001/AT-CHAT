@@ -55,6 +55,16 @@ public class UsersEndpoint {
 	public Collection<User> listLogged() {
 		return UserManager.getInstance().getOnlineUsers();
 	}
+	
+	@GET
+	@Path("current")
+	@Produces("application/json")
+	public User current() {
+		HttpSession session = request.getSession(false);
+		User user = (User) session.getAttribute("user");
+		return user;
+	}
+
 	@DELETE
 	@Path("loggedIn")
 	@Produces("application/json")
