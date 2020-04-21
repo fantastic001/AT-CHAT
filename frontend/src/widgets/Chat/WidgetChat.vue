@@ -121,7 +121,13 @@ export default {
         loadMessages() {
             ChatService.list().then(response => {
                 var me = localStorage.getItem("user_id");
-                this.messageList = response.data.map(x => {
+                var msgs = response.data;
+                if (this.user != "all") {
+                    msgs = msgs.filter(
+                        x => ((x.fromUsername == this.user && x.toUsername == me) || (x.fromUsername == me && x.toUsername == this.user))
+                    );
+                }
+                this.messageList = msgs.map(x => {
                     if (x.fromUsername == me) return {
                         author: "me",
                         type: "text",

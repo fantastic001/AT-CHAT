@@ -1,4 +1,6 @@
 <script>
+import LoginService from "../widgets/Auth/service";
+
 
 
 export default {
@@ -10,10 +12,11 @@ export default {
 	},
     mounted: function () 
     {
-	localStorage.setItem("user", "");
-	localStorage.setItem("role", "NOT_LOGGED");
-	this.$store.commit("login", {user: "", role: "NOT_LOGGED"});
-	this.$router.push("/");
+		LoginService.logout();
+		localStorage.setItem("user", "");
+		localStorage.setItem("role", "NOT_LOGGED");
+		this.$store.commit("login", {user: "", role: "NOT_LOGGED"});
+		this.$router.push("/");
     },
 }
 </script>

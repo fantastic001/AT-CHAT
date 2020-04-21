@@ -1,4 +1,7 @@
-//export const API_URL = "http://localhost:8080/prodex-rest-api";
-export const API_URL = "http://localhost:666/ChatAPI-web/";
-export const WS_URL = "ws://localhost:666/ChatAPI-web";
+// export const API_URL = "http://localhost:666/ChatAPI-web/";
+// export const WS_URL = "ws://localhost:666/ChatAPI-web";
+
+
+export const API_URL = "http://192.168.0.20:666/ChatAPI-web/";
+export const WS_URL = "ws://192.168.0.20:666/ChatAPI-web";
 
