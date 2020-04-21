@@ -7,6 +7,8 @@ import OpenIcon from 'vue-beautiful-chat/src/assets/logo-no-bg.svg'
 import FileIcon from 'vue-beautiful-chat/src/assets/file.svg'
 import CloseIconSvg from 'vue-beautiful-chat/src/assets/close.svg'
 
+import { WS_URL } from "./../../config";
+
 
 export default {
     name: "WidgetChat",
@@ -79,6 +81,18 @@ export default {
         this.loadParticipants();
         this.loadMessages();
         this.timer = setInterval(this.loadMessages, 300);
+        // Create WebSocket connection.
+        this.socket = new WebSocket(WS_URL + '/websocket/login');
+        this.socket.component = this;
+        // Connection opened
+        this.socket.addEventListener('open', function (event) {
+            socket.send('Hello Server!');
+        });
+        // Listen for messages
+        this.socket.addEventListener('message', function (event) {
+            console.log('Message from server ', event.data);
+            this.component.loadParticipants();
+        });
     },
     beforeDestroy() {
         clearInterval(this.timer);
