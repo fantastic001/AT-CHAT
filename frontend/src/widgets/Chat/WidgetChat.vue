@@ -10,7 +10,7 @@ import CloseIconSvg from 'vue-beautiful-chat/src/assets/close.svg'
 
 export default {
     name: "WidgetChat",
-    // props: ["user"],
+    props: ["user"],
     data: function () {
         return {
             icons:{
@@ -33,15 +33,10 @@ export default {
             },
             participants: [
                 {
-                id: 'user1',
-                name: 'Matteo',
+                id: this.user,
+                name: this.user,
                 imageUrl: 'https://avatars3.githubusercontent.com/u/1915989?s=230&v=4'
                 },
-                {
-                id: 'user2',
-                name: 'Support',
-                imageUrl: 'https://avatars3.githubusercontent.com/u/37018832?s=200&v=4'
-                }
             ], // the list of all the participant of the conversation. `name` is the user name, `id` is used to establish the author of a message, `imageUrl` is supposed to be the user avatar.
             titleImageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
             messageList: [
@@ -81,11 +76,44 @@ export default {
     },
     mounted: function () 
     {
-        UserService.online().then(response => {
-            this.participants = response.data
-        });
+        this.loadParticipants();
+        this.loadMessages();
+
     },
     methods: {
+        loadParticipants() {
+            if (this.user == "all") {
+                UserService.online().then(response => {
+                    this.participants = response.data.map(x => {
+                        return {
+                            id: x.username,
+                            name: x.username,
+                            imageUrl: ""
+                        }
+                    }).filter(x => x.name != localStorage.getItem("user_id"));
+                });
+            }
+            else {
+                this.participants = [this.user];
+            }
+        },
+        loadMessages() {
+            ChatService.list().then(response => {
+                var me = localStorage.getItem("user_id");
+                this.messageList = response.data.map(x => {
+                    if (x.fromUsername == me) return {
+                        author: "me",
+                        type: "text",
+                        data: {text: x.text}
+                    }
+                    else return {
+                        author: x.fromUsername,
+                        type: "text",
+                        data: {text: x.text}
+                    }
+                })
+            });
+        },
         sendMessage (text) {
             if (text.length > 0) {
                 this.newMessagesCount = this.isChatOpen ? this.newMessagesCount : this.newMessagesCount + 1
@@ -93,8 +121,14 @@ export default {
             }
             },
             onMessageWasSent (message) {
-            // called when the user sends a message
-            this.messageList = [ ...this.messageList, message ]
+                // called when the user sends a message
+                this.messageList = [ ...this.messageList, message ];
+                if (this.user != "all") {
+                    ChatService.send(this.user,"Message",message.data.text);
+                }
+                else {
+                       ChatService.broadcast("Message",message.data.text);
+                }
             },
             openChat () {
             // called when the user clicks on the fab button to open the chat

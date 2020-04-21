@@ -46,7 +46,7 @@ export default {
 <template>
 <div>
 Home page
-<WidgetChat />
+<WidgetChat user="all"/>
 </div>
 </template>
 

@@ -19,19 +19,12 @@ export default {
 	{
 		LoginService.login(this.data).then(response => {
 			console.log(response)
-			if (response.data.code == 0) {
-				CheckRoleService.get().then(response => {
-					localStorage.setItem("user", this.data.username);
-					localStorage.setItem("role", "LOGGED");
-					this.$store.commit("login", {user: this.data.username, role: "LOGGED"});
-					this.$router.push("/");
-					LoginService.info().then(response => {
-						console.log("AUTHORIZATION INFO:");
-						console.log(response);
-						localStorage.setItem("user_id", response.data.username);
-					});
-
-				});
+			if (response.data != null) {
+				localStorage.setItem("user", this.data.username);
+				localStorage.setItem("role", "LOGGED");
+				this.$store.commit("login", {user: this.data.username, role: "LOGGED"});
+				this.$router.push("/");
+				localStorage.setItem("user_id", response.data.username);
 
 			}
 			else {
