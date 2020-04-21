@@ -6,6 +6,7 @@ import com.stefan.data.User;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 
 public class MessageManager {
     private static MessageManager instance = null; 
@@ -36,6 +37,14 @@ public class MessageManager {
                 result.add(msg);
             }
         }
+        return result;
+    }
+
+    public Collection<Message> getMessages(User user) {
+        Collection<Message> union = getInbox(user);
+        union.addAll(getOutbox(user));
+        ArrayList<Message> result = new ArrayList<>(union);
+        Collections.sort(result, (c1, c2) -> c1.getCreationTime().compareTo(c2.getCreationTime()));
         return result;
     }
 

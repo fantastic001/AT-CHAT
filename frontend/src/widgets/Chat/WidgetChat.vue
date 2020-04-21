@@ -78,7 +78,10 @@ export default {
     {
         this.loadParticipants();
         this.loadMessages();
-
+        this.timer = setInterval(this.loadMessages, 300);
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
     methods: {
         loadParticipants() {

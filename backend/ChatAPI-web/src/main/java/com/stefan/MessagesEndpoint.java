@@ -51,6 +51,6 @@ public class MessagesEndpoint {
 	@Path("")
 	@Produces("application/json")
 	public Collection<Message> getInbox() {
-		return MessageManager.getInstance().getInbox((User) request.getSession().getAttribute("user"));
+		return MessageManager.getInstance().getMessages((User) request.getSession().getAttribute("user"));
 	}
 }
