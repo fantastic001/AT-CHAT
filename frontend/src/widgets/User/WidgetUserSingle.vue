@@ -24,7 +24,7 @@ export default {
 
 <div class="card" style="width: 18rem;">
   <div class="card-header">
-    {{ user }}
+        <router-link :to="'users/' + user">{{ user }}</router-link>
   </div>
   <div class="card-body">
   </div>

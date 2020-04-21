@@ -1,6 +1,7 @@
 <script>
 
 import UserService from "../widgets/User/service"
+import WidgetChat from "../widgets/Chat/WidgetChat.vue";
 
 export default {
     name: "UserDetail",
@@ -21,13 +22,14 @@ export default {
         
     },
     components: {
+        WidgetChat
     }
 }
 </script>
 
 <template>
     <div class="User-detail"> 
-
+        <WidgetChat :user="id" />
     </div>
 
 </template>

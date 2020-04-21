@@ -111,7 +111,11 @@ export default {
                 });
             }
             else {
-                this.participants = [this.user];
+                this.participants = [{
+                    id: this.user,
+                    name: this.user,
+                    imageUrl: ""
+                }];
             }
         },
         loadMessages() {
