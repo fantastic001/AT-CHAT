@@ -1,17 +1,18 @@
 #!/bin/sh
 
-FRONTEND_DIR="$(readlink -f "$1")"
-
+THIS_DIR=$(dirname $0)
+FRONTEND_DIR="$(readlink -f "$THIS_DIR")"
+pushd . 
 cd $FRONTEND_DIR
 npm install
 npm run-script build
-
+popd
 
 docker run -it --rm \
 	--name prodex_frontend \
-	--link prodex_api \
+	--link at_chat_deploy \
 	--volume "$FRONTEND_DIR/dist":/usr/share/nginx/html/frontend/dist \
 	--volume "$FRONTEND_DIR/index.html":/usr/share/nginx/html/frontend/index.html \
 	--volume "$FRONTEND_DIR/nginx/":/etc/nginx/ \
-	--publish 301:80 \
+	--publish 666:80 \
 	nginx

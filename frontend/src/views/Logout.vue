@@ -11,7 +11,7 @@ export default {
     mounted: function () 
     {
 	localStorage.setItem("user", "");
-	localStorage.setItem("role", "");
+	localStorage.setItem("role", "NOT_LOGGED");
 	this.$store.commit("login", {user: "", role: "NOT_LOGGED"});
 	this.$router.push("/");
     },

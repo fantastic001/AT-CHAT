@@ -3,7 +3,8 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import routes from './routes';
 import Vuex from 'vuex';
-
+import Chat from 'vue-beautiful-chat'
+Vue.use(Chat)
 Vue.use(Vuex);
 
 const store = new Vuex.Store({

@@ -8,8 +8,8 @@ export default {
     data: function () {
         return {
             data: {
-	    	userName: null,
-		password: null,
+	    		username: null,
+				password: null,
 	    },
 
         };
@@ -21,17 +21,14 @@ export default {
 			console.log(response)
 			if (response.data.code == 0) {
 				CheckRoleService.get().then(response => {
-					localStorage.setItem("user", this.data.userName);
-					localStorage.setItem("role", response.data.message);
-					this.$store.commit("login", {user: this.data.userName, role: response.data.message});
+					localStorage.setItem("user", this.data.username);
+					localStorage.setItem("role", "LOGGED");
+					this.$store.commit("login", {user: this.data.username, role: "LOGGED"});
 					this.$router.push("/");
 					LoginService.info().then(response => {
 						console.log("AUTHORIZATION INFO:");
 						console.log(response);
-						localStorage.setItem("user_id", response.data.user);
-						localStorage.setItem("buyer_id", response.data.buyer);
-						localStorage.setItem("seller_id", response.data.seller);
-						localStorage.setItem("admin_id", response.data.admin);
+						localStorage.setItem("user_id", response.data.username);
 					});
 
 				});
@@ -57,7 +54,7 @@ export default {
 
 		<h2> Login</h2>
 		<p>
-		<input type="text" class="form-control" placeholder="Username" v-model="data.userName" />
+		<input type="text" class="form-control" placeholder="Username" v-model="data.username" />
 		</p>
 		
 		<p>

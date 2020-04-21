@@ -22,7 +22,7 @@ export default {
     watch: {
 	search: function(criteria, oldCriteria) {
 		console.log("Searching for " + criteria);
-        	UserService.list().then(response => this.items = response.data.filter(user => this.search.split(' ').filter(x => x != '').filter(x => ((user.firstname + ' ' + user.lastname)).includes(x)).length > 0));
+        	UserService.list().then(response => this.items = response.data.filter(user => this.search.split(' ').filter(x => x != '').filter(x => ((user.username)).includes(x)).length > 0));
 	}
     },
     mounted: function () 
@@ -39,9 +39,9 @@ export default {
     <div class="WidgetUserSingle"> 
       <WidgetUserSingle
       	v-for="item in items.filter(filter)"
-      	:id="item.id"
-      	:key="item.id"
-        :user="item.id"
+      	:id="item.username"
+      	:key="item.username"
+        :user="item.username"
           />
     </div>
 

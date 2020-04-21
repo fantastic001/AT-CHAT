@@ -1,5 +1,5 @@
 {
-  "name": "prodex-frontend",
+  "name": "chat-frontend",
   "version": "1.0.0",
   "description": "Product exchange platform",
   "main": "index.js",
@@ -17,7 +17,11 @@
     "bootstrap": "^4.3.1",
     "browserify": "^16.2.3",
     "css-loader": "^3.2.0",
+    "file-loader": "^6.0.0",
+    "img-loader": "^3.0.1",
     "postcss-loader": "^3.0.0",
+    "scss-loader": "0.0.1",
+    "svg-loader": "0.0.2",
     "vue-beautiful-chat": "^2.3.1",
     "vue-loader": "^15.7.0",
     "vue-router": "^3.1.3",

@@ -15,7 +15,7 @@ export default {
   methods:{
 	  logOut: function() 
 		{
-			UserService.logOut().then(response => {
+			AuthService.logout().then(response => {
 				window.location.href = "/frontend/";
 				loocalStorage.setItem("user", "");
 				loocalStorage.setItem("role", "");
@@ -46,8 +46,8 @@ export default {
         <router-link v-if='data.role == "NOT_LOGGED"' to='/registration'>Registration</router-link>
 
         <router-link v-if="data.role != 'NOT_LOGGED'" to='/logout'>Log out</router-link>
-        <router-link v-if="data.role == 'BUYER' || data.role == 'SELLER' || data.role == 'ADMIN'" to='/profile'>Profile</router-link>
-	<router-link to="/users">Users</router-link>
+        <router-link v-if="data.role == 'LOGGED'" to='/profile'>Profile</router-link>
+		<router-link to="/users">Users</router-link>
 	</div>
 	
 	<p class="my-2 my-lg-0" v-if="data.role != 'NOT_LOGGED'">Logged as: {{ data.user }}</p>

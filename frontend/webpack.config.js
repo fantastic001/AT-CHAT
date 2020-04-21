@@ -1,6 +1,10 @@
 const path = require('path');
 
 const { VueLoaderPlugin } = require('vue-loader')
+const { FileLoaderPlugin } = require('file-loader')
+const { ImgLoaderPlugin } = require('img-loader')
+const { SassLoaderPlugin } = require('sass-loader')
+
 
 
 module.exports = {
@@ -19,6 +23,26 @@ module.exports = {
         ]
       },
       {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          'file-loader',
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          'svg-loader',
+        ]
+      },
+      {
         test: /\.css$/,
         use: [
           'vue-style-loader',
@@ -29,6 +53,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    // new SassLoaderPlugin(), 
+    // new FileLoaderPlugin(),
+    // new ImgLoaderPlugin()
   ]
 };

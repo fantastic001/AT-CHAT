@@ -10,35 +10,23 @@ export default class UserService
 
     static list() 
     {
-        return axios.get(API_URL + "/User/");
+        return axios.get(API_URL + "/rest/users/registered");
     }
 
     static get(id) 
     {
-        return axios.get(API_URL + "/User/" + id);
-    }
-    static type(id) 
-    {
-        return axios.get(API_URL + "/User/" + id + "/type");
+        return axios.get(API_URL + "/rest/user/registered/" + id);
     }
 
     static create(x)
     {
-        return axios.post(API_URL + "/User/", x);
+        return axios.post(API_URL + "/rest/users/register", x);
     }
-
-    static update(id, data) 
-    {
-        return axios.post(API_URL + "/User/" + id, data);
-    }
-
-    static delete(id) 
-    {
-        return axios.delete(API_URL + "/User/" + id);
-    }
-
     static logOut() 
     {
       
+    }
+    static online() {
+        return axios.get(API_URL + "/rest/users/loggedIn");
     }
 }

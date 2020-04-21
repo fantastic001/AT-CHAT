@@ -6,6 +6,7 @@ TARGET_PATH="$THIS_DIR/target"
 
 
 docker run --rm \
+    --hostname api.atchat \
     --name at_chat_deploy \
     -v "$TARGET_PATH":/opt/jboss/wildfly/standalone/deployments/ \
     -p 5544:8080 \
