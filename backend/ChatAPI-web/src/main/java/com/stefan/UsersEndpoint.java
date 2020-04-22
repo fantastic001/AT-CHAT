@@ -87,4 +87,11 @@ public class UsersEndpoint {
 		session.setAttribute("user", null);
 		return user;
 	}
+
+	@POST
+	@Path("loggedIn")
+	@Produces("application/json")
+	public String submitLogedInUsers(Collection<User> users) {
+		return "OK";
+	}
 }

@@ -21,10 +21,10 @@ public class NodesEndpoint {
 
 
 
-	@GET	
-	@Path("say")
+	@POST
+	@Path("")
 	@Produces("application/json")
-	public Result hello() {
+	public Result submitAllNodes() {
 		Result r = new Result();
 		r.setA(5);
 		return r;

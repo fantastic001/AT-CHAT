@@ -20,12 +20,25 @@ public class NodeEndpoint {
 	//@Context private HttpServletRequest request;
 
 
-	@GET	
-	@Path("say")
+	@POST
+	@Path("")
 	@Produces("application/json")
-	public Result hello() {
+	public Result newNode() {
 		Result r = new Result();
 		r.setA(5);
 		return r;
+	}
+	@GET
+	@Path("")
+	@Produces("application/json")
+	public String pingNode() {
+		return "PONG";
+	}
+
+	@DELETE
+	@Path("{alias}")
+	@Produces("application/json")
+	public String deleteNode(@PathParam("alias") String alias) {
+		return "OK";
 	}
 }

@@ -21,12 +21,10 @@ public class RegisterEndpoint {
 
 
 
-	@GET	
-	@Path("say")
+	@POST
+	@Path("")
 	@Produces("application/json")
-	public Result hello() {
-		Result r = new Result();
-		r.setA(5);
-		return r;
+	public String register() {
+		return "OK";
 	}
 }

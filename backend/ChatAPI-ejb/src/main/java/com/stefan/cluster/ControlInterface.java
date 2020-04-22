@@ -5,7 +5,7 @@ import com.stefan.data.User;
 import java.util.Collection;
 
 public interface ControlInterface {
-
+    // https://www.baeldung.com/resteasy-client-tutorial
 
     public void init();
     public void run();
