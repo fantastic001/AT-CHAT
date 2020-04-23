@@ -3,11 +3,16 @@ package com.stefan.cluster;
 import javax.ejb.Startup;
 import javax.ejb.Singleton;
 import javax.annotation.PostConstruct;
+import javax.ejb.Schedule;
 
 @Singleton
 @Startup
 public class Control {
 
+    @Schedule(hour = "*", minute="*", second="*/10")
+    public void ping() {
+        System.out.println("Ping");
+    }
 
     private ControlInterface node = null;
     private ControlInterface getControl() {
