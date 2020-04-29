@@ -1,4 +1,4 @@
-package com.stefan;
+package com.stefan.endpoints;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,20 +15,19 @@ import javax.ws.rs.core.*;
 
 import java.util.Date;
 
-@Path("hello")
-public class Hello {
+import javax.ejb.Stateless;
+
+@Stateless
+@Path("register")
+public class RegisterEndpoint {
 	//@Context private HttpServletRequest request;
 
-	public Hello() {
-		System.out.println("******************* REST ENDPOINT");
-	}
 
-	@GET	
-	@Path("say")
+
+	@POST
+	@Path("")
 	@Produces("application/json")
-	public Result hello() {
-		Result r = new Result();
-		r.setA(5);
-		return r;
+	public String register() {
+		return "OK";
 	}
 }

@@ -1,4 +1,4 @@
-package com.stefan;
+package com.stefan.endpoints;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,8 +15,11 @@ import javax.ws.rs.core.*;
 
 import java.util.Date;
 
-@Path("register")
-public class RegisterEndpoint {
+import javax.ejb.Stateless;
+
+@Stateless
+@Path("nodes")
+public class NodesEndpoint {
 	//@Context private HttpServletRequest request;
 
 
@@ -24,7 +27,9 @@ public class RegisterEndpoint {
 	@POST
 	@Path("")
 	@Produces("application/json")
-	public String register() {
-		return "OK";
+	public Result submitAllNodes() {
+		Result r = new Result();
+		r.setA(5);
+		return r;
 	}
 }

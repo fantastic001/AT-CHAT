@@ -1,4 +1,4 @@
-package com.stefan;
+package com.stefan.endpoints;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -21,6 +21,9 @@ import com.stefan.user.UserManager;
 import com.stefan.user.AuthErrorException;
 import com.stefan.user.UserExistsException;
 
+import javax.ejb.Stateless;
+
+@Stateless
 @Path("users")
 public class UsersEndpoint {
 	@Context private HttpServletRequest request;

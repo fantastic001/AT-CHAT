@@ -1,4 +1,4 @@
-package com.stefan;
+package com.stefan.endpoints;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,18 +15,33 @@ import javax.ws.rs.core.*;
 
 import java.util.Date;
 
-@Path("nodes")
-public class NodesEndpoint {
-	//@Context private HttpServletRequest request;
+import javax.ejb.Stateless;
 
+@Stateless
+@Path("node")
+public class NodeEndpoint {
+	//@Context private HttpServletRequest request;
 
 
 	@POST
 	@Path("")
 	@Produces("application/json")
-	public Result submitAllNodes() {
+	public Result newNode() {
 		Result r = new Result();
 		r.setA(5);
 		return r;
+	}
+	@GET
+	@Path("")
+	@Produces("application/json")
+	public String pingNode() {
+		return "PONG";
+	}
+
+	@DELETE
+	@Path("{alias}")
+	@Produces("application/json")
+	public String deleteNode(@PathParam("alias") String alias) {
+		return "OK";
 	}
 }

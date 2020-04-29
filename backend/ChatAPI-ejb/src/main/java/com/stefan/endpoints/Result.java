@@ -1,4 +1,4 @@
-package com.stefan;
+package com.stefan.endpoints;
 
 public class Result {
     private int a; 

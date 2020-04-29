@@ -1,4 +1,4 @@
-package com.stefan;
+package com.stefan.endpoints;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,6 +22,9 @@ import com.stefan.data.User;
 import com.stefan.message.MessageManager; 
 import com.stefan.user.UserManager;
 
+import javax.ejb.Stateless;
+
+@Stateless
 @Path("messages")
 public class MessagesEndpoint {
 	@Context private HttpServletRequest request;
