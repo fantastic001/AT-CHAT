@@ -72,6 +72,8 @@ public class ResourceReader {
     }
 
     public String getProperty(String propertyName, String defaultValue) {
+        System.out.println("Searching for property " + propertyName);
+        if (System.getenv(propertyName) != null) return System.getenv(propertyName);
         if (doc == null) return defaultValue;
         System.out.println("Root element: " + doc.getDocumentElement().getNodeName());  
         NodeList nodeList = doc.getElementsByTagName("property");  

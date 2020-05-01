@@ -15,19 +15,25 @@ import javax.ws.rs.core.*;
 
 import java.util.Date;
 
+import javax.ejb.EJB;
+
 import javax.ejb.Stateless;
+import com.stefan.cluster.Control;
+import com.stefan.cluster.Node;
 
 @Stateless
 @Path("register")
 public class RegisterEndpoint {
 	//@Context private HttpServletRequest request;
 
-
+	@EJB
+	Control control;
 
 	@POST
 	@Path("")
 	@Produces("application/json")
-	public String register() {
+	public String register(Node node) {
+		control.getControl().nodeAdded(node);
 		return "OK";
 	}
 }

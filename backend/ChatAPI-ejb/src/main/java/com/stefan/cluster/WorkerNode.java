@@ -3,14 +3,54 @@ package com.stefan.cluster;
 import java.util.Collection;
 import com.stefan.data.User;
 import com.stefan.user.UserManager;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import java.util.Random;
 
 public class WorkerNode implements ControlInterface {
     
-    
+    private String randomNodeAlias() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int) 
+            (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
+        }
+        String generatedString = buffer.toString();   
+        return generatedString;
+    }
+    private Node node;
     @Override
     public void init() {
-        // figure out where is master 
-        // register to master 
+        ResourceReader reader = new ResourceReader();
+        String masterHostname = reader.getProperty("masterHostname", "");
+        System.out.println("Running in worker node with master: " + masterHostname);
+        final String path = masterHostname + "/register"; 
+        
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(UriBuilder.fromPath(path));
+        System.out.println("Preparing request for registration...");
+        String alias = reader.getProperty("NODE_ALIAS", "node-" + randomNodeAlias());
+        System.out.println("Alias: " + alias);
+        node = new Node(
+            alias,
+            reader.getProperty("NODE_HOSTNAME", System.getenv("HOSTNAME")), 
+            Integer.parseInt(reader.getProperty("NODE_PORT", "8080")), 
+            reader.getProperty("NODE_PATH", "/ChatAPI-web/rest/")
+        );
+
+        Response res = target.request().post(Entity.entity(node, "application/json"));
+        System.out.println("Node registration response: " + res.getStatus());
+        // RegisterEndpoint proxy = target.proxy(RegisterEndpoint.class);
+        // proxy.register(new Node("node", "hostname", 80, "/"));
         // get list of all users from master and add them to UserManager 
     }
 

@@ -9,19 +9,22 @@ import javax.ejb.Schedule;
 @Startup
 public class Control {
 
-    @Schedule(hour = "*", minute="*", second="*/10")
+
+    @Schedule(hour = "*", minute="*", second="*/15")
     public void ping() {
         System.out.println("Ping");
     }
 
     private ControlInterface node = null;
-    private ControlInterface getControl() {
+    public ControlInterface getControl() {
         if (node != null) return node;
         if (isMaster()) {
             node = new MasterNode();
+            node.init();
         }
         else {
             node = new WorkerNode();
+            node.init();
         }
         return node;
     }
