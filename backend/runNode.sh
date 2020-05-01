@@ -17,7 +17,7 @@ docker run --rm \
     --link  at_chat_deploy \
     -e NODE_HOSTNAME=$NODE_HOSTNAME \
     -e NODE_ALIAS=$NODE_ALIAS \
-    -e masterHostname=api.atchat:8080/ChatAPI-web/rest \
+    -e masterHostname="http://api.atchat:8080/ChatAPI-web/rest" \
     -v "$TARGET_PATH-worker":/opt/jboss/wildfly/standalone/deployments/ \
     -it \
     jboss/wildfly /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0

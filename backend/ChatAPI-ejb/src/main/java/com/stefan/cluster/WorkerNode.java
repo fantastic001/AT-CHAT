@@ -46,6 +46,7 @@ public class WorkerNode implements ControlInterface {
             Integer.parseInt(reader.getProperty("NODE_PORT", "8080")), 
             reader.getProperty("NODE_PATH", "/ChatAPI-web/rest/")
         );
+        System.out.println("Sending POST request to master to URL: " + path);
 
         Response res = target.request().post(Entity.entity(node, "application/json"));
         System.out.println("Node registration response: " + res.getStatus());
