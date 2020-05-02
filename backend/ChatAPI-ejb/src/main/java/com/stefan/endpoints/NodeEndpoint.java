@@ -17,19 +17,24 @@ import java.util.Date;
 
 import javax.ejb.Stateless;
 
+import javax.ejb.EJB;
+import com.stefan.cluster.Control;
+import com.stefan.cluster.Node;
+
 @Stateless
 @Path("node")
 public class NodeEndpoint {
 	//@Context private HttpServletRequest request;
 
+	@EJB
+	Control control;
 
 	@POST
 	@Path("")
 	@Produces("application/json")
-	public Result newNode() {
-		Result r = new Result();
-		r.setA(5);
-		return r;
+	public String newNode(Node node) {
+		control.getControl().nodeAdded(node);
+		return "OK";
 	}
 	@GET
 	@Path("")

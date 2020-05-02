@@ -10,9 +10,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import java.util.Random;
+import java.util.Collection;
+import java.util.ArrayList;
 
 public class WorkerNode implements ControlInterface {
     
+    private Collection<Node> nodes;
+
     private String randomNodeAlias() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -30,6 +34,7 @@ public class WorkerNode implements ControlInterface {
     private Node node;
     @Override
     public void init() {
+        nodes = new ArrayList<>();
         ResourceReader reader = new ResourceReader();
         String masterHostname = reader.getProperty("masterHostname", "");
         System.out.println("Running in worker node with master: " + masterHostname);
@@ -68,7 +73,8 @@ public class WorkerNode implements ControlInterface {
 
     @Override
     public void nodeAdded(Node node) {
-        
+        System.out.println("Got notification about new node with alias " + node.getAlias());
+        nodes.add(node);
     }
     
     @Override

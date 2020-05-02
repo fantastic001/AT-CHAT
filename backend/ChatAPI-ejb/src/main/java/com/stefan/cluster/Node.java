@@ -2,6 +2,17 @@ package com.stefan.cluster;
 
 import java.util.Date;
 
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import javax.servlet.http.*;
+import javax.ws.rs.core.*;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+
 public class Node {
 	
 	
@@ -19,6 +30,7 @@ public class Node {
 	{
 		this.state = 0; // OK
 	}
+
 	public Node(String _alias, String _hostname, int _port, String _path) {
 		super();
 		 
@@ -32,7 +44,19 @@ public class Node {
 		
 	}
 	
-	 
+	public String getAddress() {
+		return "http://" + getHostname() + ":" + getPort() + "/" + getPath();
+	}
+	
+	public <R> Response post(String location, R body) {
+		final String path = getAddress() + location; 
+        
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(UriBuilder.fromPath(path));
+        System.out.println("Preparing request for sending to " + path);
+        return target.request().post(Entity.entity(body, "application/json"));
+	}
+
 	public String getAlias() 
 	{
 		return this.alias;
