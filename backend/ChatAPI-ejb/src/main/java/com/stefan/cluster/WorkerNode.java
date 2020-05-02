@@ -49,7 +49,7 @@ public class WorkerNode implements ControlInterface {
             alias,
             reader.getProperty("NODE_HOSTNAME", System.getenv("HOSTNAME")), 
             Integer.parseInt(reader.getProperty("NODE_PORT", "8080")), 
-            reader.getProperty("NODE_PATH", "/ChatAPI-web/rest/")
+            reader.getProperty("NODE_PATH", "/ChatAPI-web/rest")
         );
         System.out.println("Sending POST request to master to URL: " + path);
 
