@@ -28,11 +28,12 @@ public class MasterNode implements ControlInterface {
     
     @Override
     public void nodeAdded(Node node) {
-        nodes.add(node);
         System.out.println("Adding node: " + node.getAlias());
         for (Node current : nodes) {
-            // send notification about new node
+            current.post("/node/", node);
         }
+        nodes.add(node);
+       
     }
 
     @Override
