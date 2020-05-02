@@ -95,6 +95,7 @@ public class UsersEndpoint {
 		User user = (User) session.getAttribute("user");
 		if (user == null) return null;
 		UserManager.getInstance().logout(user);
+		control.getControl().login(UserManager.getInstance().getOnlineUsers());
 		session.setAttribute("user", null);
 		return user;
 	}
@@ -103,7 +104,29 @@ public class UsersEndpoint {
 	@Path("loggedIn")
 	@Produces("application/json")
 	public String submitLogedInUsers(Collection<User> users) {
-		control.getControl().setUsers(users);
+		for (User user : users) {
+			// check if not logged in
+			boolean found = false; 
+			for (User u : UserManager.getInstance().getOnlineUsers()) {
+				if (user.getUsername().equals(u.getUsername())) found=true;
+			}
+			if (!found) {
+				try {
+					UserManager.getInstance().login(user);
+				}
+				catch (AuthErrorException e) {
+					return "ERROR";
+				}
+			}
+		}
+		for (User user : UserManager.getInstance().getOnlineUsers()) {
+			// check if not logged in
+			boolean found = false; 
+			for (User u : users) {
+				if (user.getUsername().equals(u.getUsername())) found=true;
+			}
+			if (!found) UserManager.getInstance().logout(user);
+		}
 		return "OK";
 	}
 }
