@@ -102,4 +102,23 @@ public class WorkerNode implements ControlInterface {
     public void onPong(Node node) {
         
     }
+
+    @Override
+    public boolean hasUser(User user) {
+        return user.getHostAlias().equals(node.getAlias());
+    }
+
+    @Override
+    public void setUsers(Collection<User> users) {
+    }
+
+
+    @Override
+    public Node findNode(String alias) {
+        if (alias.equals(node.getAlias())) return node;
+        for (Node node : nodes) {
+            if (node.getAlias().equals(alias)) return node;
+        }
+        return null;
+    }
 }

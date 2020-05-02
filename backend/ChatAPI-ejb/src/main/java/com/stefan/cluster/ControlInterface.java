@@ -15,4 +15,9 @@ public interface ControlInterface {
     public Collection<User> getAllUsers();
     public void onPing();
     public void onPong(Node node);
+    
+    public boolean hasUser(User user);
+    public void setUsers(Collection<User> users);
+
+    public Node findNode(String alias);
 }

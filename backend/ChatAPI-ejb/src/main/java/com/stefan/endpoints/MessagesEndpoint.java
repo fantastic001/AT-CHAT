@@ -23,14 +23,14 @@ import com.stefan.message.MessageManager;
 import com.stefan.user.UserManager;
 
 import javax.ejb.Stateless;
+import javax.ejb.EJB;
 
 @Stateless
 @Path("messages")
 public class MessagesEndpoint {
 	@Context private HttpServletRequest request;
 
-
-
+	
 	@POST
 	@Path("all")
 	@Produces("application/json")

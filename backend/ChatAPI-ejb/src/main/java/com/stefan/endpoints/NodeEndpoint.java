@@ -21,6 +21,9 @@ import javax.ejb.EJB;
 import com.stefan.cluster.Control;
 import com.stefan.cluster.Node;
 
+import com.stefan.message.MessageManager;
+import com.stefan.data.Message;
+
 @Stateless
 @Path("node")
 public class NodeEndpoint {
@@ -36,6 +39,15 @@ public class NodeEndpoint {
 		control.getControl().nodeAdded(node);
 		return "OK";
 	}
+	
+	@POST
+	@Path("messages")
+	@Produces("application/json")
+	public Message newMessage(Message msg) {
+		MessageManager.getInstance().createMessage(msg);
+		return msg;
+	}
+
 	@GET
 	@Path("")
 	@Produces("application/json")

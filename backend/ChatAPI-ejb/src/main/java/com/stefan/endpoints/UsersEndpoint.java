@@ -23,11 +23,16 @@ import com.stefan.user.UserExistsException;
 
 import javax.ejb.Stateless;
 
+import javax.ejb.EJB;
+import com.stefan.cluster.Control;
+
 @Stateless
 @Path("users")
 public class UsersEndpoint {
 	@Context private HttpServletRequest request;
 
+	@EJB 
+	Control control;
 
 	@POST
 	@Path("register")
@@ -95,6 +100,7 @@ public class UsersEndpoint {
 	@Path("loggedIn")
 	@Produces("application/json")
 	public String submitLogedInUsers(Collection<User> users) {
+		control.getControl().setUsers(users);
 		return "OK";
 	}
 }

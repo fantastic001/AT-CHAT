@@ -91,4 +91,22 @@ public class MasterNode implements ControlInterface {
     public void onPong(Node node) {
         
     }
+
+    @Override
+    public boolean hasUser(User user) {
+        return user.getHostAlias().equals("") || user.getHostAlias().equals("master");
+    }
+
+    @Override
+    public void setUsers(Collection<User> users) {
+    }
+
+    @Override
+    public Node findNode(String alias) {
+        if (alias.equals("") || alias.equals("master")) return null;
+        for (Node node : nodes) {
+            if (node.getAlias().equals(alias)) return node;
+        }
+        return null;
+    }
 }
