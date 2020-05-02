@@ -31,6 +31,18 @@ public class WorkerNode implements ControlInterface {
         String generatedString = buffer.toString();   
         return generatedString;
     }
+
+    private <T> Response postToMaster(String location, T body) {
+        ResourceReader reader = new ResourceReader();
+        String masterHostname = reader.getProperty("masterHostname", "");
+        final String path = masterHostname + location;
+        
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(UriBuilder.fromPath(path));
+        Response res = target.request().post(Entity.entity(body, "application/json"));
+        return res;
+    }
+
     private Node node;
     @Override
     public void init() {
@@ -121,5 +133,23 @@ public class WorkerNode implements ControlInterface {
             if (node.getAlias().equals(alias)) return node;
         }
         return null;
+    }
+
+    @Override
+    public void login(Collection<User> users) {
+        for (Node node : nodes) {
+            node.postAsync("/users/loggedIn/", users);
+        }
+        postToMaster("/users/loggedIn", users);
+    }
+
+    @Override
+    public void register(User user) {
+        if (user.getHostAlias() != null) return;
+        user.setHostAlias(node.getAlias());
+        for (Node node : nodes) {
+            node.postAsync("/users/register/", user);
+        }
+        postToMaster("/users/register/", user);
     }
 }

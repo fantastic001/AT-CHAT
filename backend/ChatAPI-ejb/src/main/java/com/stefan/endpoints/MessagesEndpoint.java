@@ -51,7 +51,7 @@ public class MessagesEndpoint {
 		User fromUser = null;
 		String from = message.getFromUsername();
 		String to = message.getToUsername();
-        for (User user : UserManager.getInstance().getOnlineUsers()) {
+        for (User user : UserManager.getInstance().getUsers()) {
             if (user.getUsername().equals(from)) fromUser = user;
             if (user.getUsername().equals(to)) toUser = user;
         }

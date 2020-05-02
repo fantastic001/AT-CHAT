@@ -20,4 +20,7 @@ public interface ControlInterface {
     public void setUsers(Collection<User> users);
 
     public Node findNode(String alias);
+
+    public void login(Collection<User> user);
+    public void register(User user);
 }

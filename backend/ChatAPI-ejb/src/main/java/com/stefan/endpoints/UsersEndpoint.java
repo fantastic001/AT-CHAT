@@ -40,6 +40,8 @@ public class UsersEndpoint {
 	public User register(User user) {
 		try {
 			UserManager.getInstance().registerUser(user);
+			// TODO handle case if user exists on other nodes
+			control.getControl().register(user);
 			return user;
 		}
 		catch (UserExistsException e) {
@@ -55,6 +57,7 @@ public class UsersEndpoint {
 			UserManager.getInstance().login(user);
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", user);
+			control.getControl().login(UserManager.getInstance().getOnlineUsers());
 			return user;
 		} catch (AuthErrorException e) {
 			return null;

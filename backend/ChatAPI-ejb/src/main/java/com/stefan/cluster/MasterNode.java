@@ -101,6 +101,7 @@ public class MasterNode implements ControlInterface {
 
     @Override
     public void setUsers(Collection<User> users) {
+        
     }
 
     @Override
@@ -110,5 +111,21 @@ public class MasterNode implements ControlInterface {
             if (node.getAlias().equals(alias)) return node;
         }
         return null;
+    }
+
+    @Override
+    public void login(Collection<User> users) {
+        for (Node node : nodes) {
+            node.postAsync("/users/loggedIn/", users);
+        }
+    }
+
+    @Override
+    public void register(User user) {
+        if (user.getHostAlias() != null) return;
+        user.setHostAlias("master");
+        for (Node node : nodes) {
+            node.postAsync("/users/register/", user);
+        }
     }
 }
