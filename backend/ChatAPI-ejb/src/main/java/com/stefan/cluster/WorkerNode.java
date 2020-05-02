@@ -105,6 +105,7 @@ public class WorkerNode implements ControlInterface {
 
     @Override
     public boolean hasUser(User user) {
+        if (user.getHostAlias() == null) return false; // legacy
         return user.getHostAlias().equals(node.getAlias());
     }
 

@@ -94,6 +94,8 @@ public class MasterNode implements ControlInterface {
 
     @Override
     public boolean hasUser(User user) {
+        System.out.println("MasterNode.hasUser()");
+        if (user.getHostAlias() == null) return true; // legacy
         return user.getHostAlias().equals("") || user.getHostAlias().equals("master");
     }
 

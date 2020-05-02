@@ -24,13 +24,17 @@ import com.stefan.user.UserManager;
 
 import javax.ejb.Stateless;
 import javax.ejb.EJB;
+import com.stefan.cluster.Control;
+import com.stefan.cluster.Node;
 
 @Stateless
 @Path("messages")
 public class MessagesEndpoint {
 	@Context private HttpServletRequest request;
 
-	
+	@EJB 
+	private Control control;
+
 	@POST
 	@Path("all")
 	@Produces("application/json")
@@ -43,6 +47,23 @@ public class MessagesEndpoint {
 	@Path("user")
 	@Produces("application/json")
 	public Message user(Message message) {
+		User toUser = null;
+		User fromUser = null;
+		String from = message.getFromUsername();
+		String to = message.getToUsername();
+        for (User user : UserManager.getInstance().getOnlineUsers()) {
+            if (user.getUsername().equals(from)) fromUser = user;
+            if (user.getUsername().equals(to)) toUser = user;
+        }
+        if (toUser == null || fromUser == null) return null;
+        if (! control.getControl().hasUser(fromUser)) {
+            return null;
+        }
+        if (! control.getControl().hasUser(toUser)) {
+            Node node = control.getControl().findNode(toUser.getHostAlias());
+            node.postAsync("/node/messages/", message);
+            return message;
+        }
 		return MessageManager.getInstance().createMessage(
 				message.getFromUsername(), 
 				message.getToUsername(), 
@@ -54,6 +75,15 @@ public class MessagesEndpoint {
 	@Path("")
 	@Produces("application/json")
 	public Collection<Message> getInbox() {
-		return MessageManager.getInstance().getMessages((User) request.getSession().getAttribute("user"));
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null) return new ArrayList<>();
+        System.out.println("Getting messages for " + user.getUsername());
+        if (! control.getControl().hasUser(user)) {
+            System.out.println("This node does not have this user");
+            return new ArrayList<>();
+        }
+        System.out.println("User found");
+
+		return MessageManager.getInstance().getMessages(user);
 	}
 }

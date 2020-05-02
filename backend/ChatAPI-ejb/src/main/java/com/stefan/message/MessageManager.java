@@ -18,8 +18,6 @@ import com.stefan.user.UserManager;
 
 public class MessageManager {
 
-    @EJB 
-    private Control control;
 
     private static MessageManager instance = null; 
     public static MessageManager getInstance() {
@@ -33,9 +31,6 @@ public class MessageManager {
     }
 
     public ArrayList<Message> getInbox(User user) {
-        if (! control.getControl().hasUser(user)) {
-            return new ArrayList<>();
-        }
         ArrayList<Message> result = new ArrayList<>();
         for (Message msg : this.messages) {
             if (msg.getToUsername().equals(user.getUsername())) {
@@ -46,9 +41,6 @@ public class MessageManager {
     }
 
     public ArrayList<Message> getOutbox(User user) {
-        if (! control.getControl().hasUser(user)) {
-            return new ArrayList<>();
-        }
         ArrayList<Message> result = new ArrayList<>();
         for (Message msg : this.messages) {
             if (msg.getFromUsername().equals(user.getUsername())) {
@@ -59,9 +51,6 @@ public class MessageManager {
     }
 
     public Collection<Message> getMessages(User user) {
-        if (! control.getControl().hasUser(user)) {
-            return new ArrayList<>();
-        }
         Collection<Message> union = getInbox(user);
         union.addAll(getOutbox(user));
         ArrayList<Message> result = new ArrayList<>(union);
@@ -70,21 +59,7 @@ public class MessageManager {
     }
 
     public Message createMessage(String from, String to, String subject, String text) {
-        User toUser = null;
-        User fromUser = null;
-        for (User user : UserManager.getInstance().getOnlineUsers()) {
-            if (user.getUsername().equals(from)) fromUser = user;
-            if (user.getUsername().equals(to)) toUser = user;
-        }
-        if (toUser == null || fromUser == null) return null;
-        if (! control.getControl().hasUser(fromUser)) {
-            return null;
-        }
         Message msg = new Message(from, to, LocalDateTime.now(), subject, text);
-        if (! control.getControl().hasUser(toUser)) {
-            Node node = control.getControl().findNode(toUser.getHostAlias());
-            node.postAsync("/node/messages/", msg);
-        }
         this.messages.add(msg);
         return msg;
     }
