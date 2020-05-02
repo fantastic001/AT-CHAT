@@ -1,6 +1,7 @@
 package com.stefan.cluster;
 
 import java.util.Date;
+import java.util.concurrent.Future;
 
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -55,6 +56,15 @@ public class Node {
         WebTarget target = client.target(UriBuilder.fromPath(path));
         System.out.println("Preparing request for sending to " + path);
         return target.request().post(Entity.entity(body, "application/json"));
+	}
+
+	public <R> Future<Response> postAsync(String location, R body) {
+		final String path = getAddress() + location; 
+        
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(UriBuilder.fromPath(path));
+        System.out.println("Preparing request for sending to " + path);
+        return target.request().async().post(Entity.entity(body, "application/json"));
 	}
 
 	public String getAlias() 

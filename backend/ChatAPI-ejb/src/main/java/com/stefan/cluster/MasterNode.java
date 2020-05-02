@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import com.stefan.user.UserManager;
 import com.stefan.data.User;
+import javax.ws.rs.core.Response;
 
 public class MasterNode implements ControlInterface {
     
@@ -13,6 +14,7 @@ public class MasterNode implements ControlInterface {
 
     @Override
     public void init() {
+        System.out.println("Initializing master node");
         nodes = new ArrayList<>();
     }
 
@@ -31,7 +33,9 @@ public class MasterNode implements ControlInterface {
         System.out.println("Adding node: " + node.getAlias());
         for (Node current : nodes) {
             current.post("/node/", node);
+            node.postAsync("/nodes/", current);
         }
+        
         nodes.add(node);
        
     }

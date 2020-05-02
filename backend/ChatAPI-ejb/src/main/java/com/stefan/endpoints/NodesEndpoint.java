@@ -16,20 +16,25 @@ import javax.ws.rs.core.*;
 import java.util.Date;
 
 import javax.ejb.Stateless;
+import com.stefan.cluster.Control;
+import javax.ejb.EJB;
+import com.stefan.cluster.Node;
+import java.util.Collection;
 
 @Stateless
 @Path("nodes")
 public class NodesEndpoint {
 	//@Context private HttpServletRequest request;
 
-
+	@EJB
+	private Control control;
 
 	@POST
 	@Path("")
 	@Produces("application/json")
-	public Result submitAllNodes() {
-		Result r = new Result();
-		r.setA(5);
-		return r;
+	public String submitAllNodes(Node node) {
+		System.out.println("/nodes/ endpoint");
+		control.getControl().nodeAdded(node);
+		return "OK";
 	}
 }
