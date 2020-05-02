@@ -47,6 +47,7 @@ public class NodeEndpoint {
 	@Path("{alias}")
 	@Produces("application/json")
 	public String deleteNode(@PathParam("alias") String alias) {
+		control.getControl().nodeRemoved(alias);
 		return "OK";
 	}
 }

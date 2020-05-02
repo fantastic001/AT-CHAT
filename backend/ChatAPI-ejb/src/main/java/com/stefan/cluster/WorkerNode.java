@@ -78,8 +78,15 @@ public class WorkerNode implements ControlInterface {
     }
     
     @Override
-    public void nodeRemoved(Node node) {
-        
+    public void nodeRemoved(String alias) {
+        Node node = null; 
+        for (Node n : nodes) {
+            if (n.getAlias().equals(alias)) node = n;
+        }
+        if (node != null) {
+            System.out.println("Removing node from registered nodes: " + node.getAlias());
+            nodes.remove(node);
+        }
     }
 
     @Override

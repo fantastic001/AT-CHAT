@@ -11,7 +11,7 @@ public interface ControlInterface {
     public void run();
     public void finish();
     public void nodeAdded(Node node);
-    public void nodeRemoved(Node node);
+    public void nodeRemoved(String alias);
     public Collection<User> getAllUsers();
     public void onPing();
     public void onPong(Node node);
