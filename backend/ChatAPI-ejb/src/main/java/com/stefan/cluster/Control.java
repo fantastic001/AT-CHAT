@@ -2,6 +2,9 @@ package com.stefan.cluster;
 
 import javax.ejb.Startup;
 import javax.ejb.Singleton;
+
+import java.util.concurrent.TimeUnit;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Schedule;
 
@@ -12,7 +15,7 @@ public class Control {
 
     @Schedule(hour = "*", minute="*", second="*/15")
     public void ping() {
-        System.out.println("Ping");
+        getControl().onPing();
     }
 
     private ControlInterface node = null;

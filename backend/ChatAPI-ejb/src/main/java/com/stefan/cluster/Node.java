@@ -66,6 +66,22 @@ public class Node {
         System.out.println("Preparing request for sending to " + path);
         return target.request().async().post(Entity.entity(body, "application/json"));
 	}
+	public <R> Future<Response> getAsync(String location) {
+		final String path = getAddress() + location; 
+        
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(UriBuilder.fromPath(path));
+        System.out.println("Preparing request for sending to " + path);
+        return target.request().async().get();
+	}
+	public <R> Future<Response> deleteAsync(String location) {
+		final String path = getAddress() + location; 
+        
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(UriBuilder.fromPath(path));
+        System.out.println("Preparing request for sending to " + path);
+        return target.request().async().delete();
+	}
 
 	public String getAlias() 
 	{
