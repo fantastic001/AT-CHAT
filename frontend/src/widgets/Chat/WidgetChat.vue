@@ -118,10 +118,26 @@ export default {
                 }];
             }
         },
+        removeDuplicates(originalArray, prop) {
+            var newArray = [];
+            var lookupObject  = {};
+
+            for(var i in originalArray) {
+                lookupObject[originalArray[i][prop]] = originalArray[i];
+            }
+
+            for(i in lookupObject) {
+                newArray.push(lookupObject[i]);
+            }
+            return newArray;
+        },
         loadMessages() {
             ChatService.list().then(response => {
                 var me = localStorage.getItem("user_id");
                 var msgs = response.data;
+                if (this.user == "all") {
+                    msgs = this.removeDuplicates(msgs, "subject");
+                }
                 if (this.user != "all") {
                     msgs = msgs.filter(
                         x => ((x.fromUsername == this.user && x.toUsername == me) || (x.fromUsername == me && x.toUsername == this.user))
@@ -154,7 +170,7 @@ export default {
                     ChatService.send(this.user,"Message",message.data.text);
                 }
                 else {
-                       ChatService.broadcast("Message",message.data.text);
+                       ChatService.broadcast(Math.floor(Math.random() * 100000) + "-broadcast",message.data.text);
                 }
             },
             openChat () {
