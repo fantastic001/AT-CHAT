@@ -65,8 +65,11 @@ public class MessageManager {
     }
 
     public Message createMessage(Message msg) {
-        this.messages.add(msg);
-        return msg;
+        return createMessage(
+            msg.getFromUsername(), 
+            msg.getToUsername(), 
+            msg.getSubject(), msg.getText()
+        );
     }
 
 

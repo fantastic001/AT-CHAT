@@ -16,6 +16,7 @@ import javax.ws.rs.client.ClientBuilder;
 
 public class Node {
 	
+	private boolean isMaster;
 	
 	private String alias; 
 	
@@ -42,11 +43,18 @@ public class Node {
 		this.port = _port;
 		 
 		this.path = _path;
+		this.isMaster = false;
 		
+	}
+	public Node(String masterAddress) {
+		this.isMaster = true;
+		this.hostname = masterAddress;
 	}
 	
 	public String getAddress() {
-		return "http://" + getHostname() + ":" + getPort() + "/" + getPath();
+		return isMaster
+			? hostname 
+			: "http://" + getHostname() + ":" + getPort() + "/" + getPath();
 	}
 	
 	public <R> Response post(String location, R body) {

@@ -44,6 +44,9 @@ public class NodeEndpoint {
 	@Path("messages")
 	@Produces("application/json")
 	public Message newMessage(Message msg) {
+		System.out.println("This node got message!");
+		System.out.println("From: " + msg.getFromUsername());
+		System.out.println("To: " + msg.getToUsername());
 		MessageManager.getInstance().createMessage(msg);
 		return msg;
 	}

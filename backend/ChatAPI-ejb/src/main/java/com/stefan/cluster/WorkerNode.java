@@ -116,7 +116,12 @@ public class WorkerNode implements ControlInterface {
     }
 
     @Override
-    public boolean hasUser(User user) {
+    public boolean hasUser(User u) {
+        User user = null;
+        for (User usr : UserManager.getInstance().getUsers()) {
+            if (usr.getUsername().equals(u.getUsername())) user = usr;
+        }
+        if (user == null) return false;
         if (user.getHostAlias() == null) return false; // legacy
         return user.getHostAlias().equals(node.getAlias());
     }
@@ -132,7 +137,9 @@ public class WorkerNode implements ControlInterface {
         for (Node node : nodes) {
             if (node.getAlias().equals(alias)) return node;
         }
-        return null;
+        ResourceReader reader = new ResourceReader();
+        String masterHostname = reader.getProperty("masterHostname", "");
+        return new Node(masterHostname);
     }
 
     @Override

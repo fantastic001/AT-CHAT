@@ -55,14 +55,22 @@ public class MessagesEndpoint {
             if (user.getUsername().equals(from)) fromUser = user;
             if (user.getUsername().equals(to)) toUser = user;
         }
-        if (toUser == null || fromUser == null) return null;
+		if (toUser == null || fromUser == null) return null;
+		System.out.println("All users found in this or other nodes.");
         if (! control.getControl().hasUser(fromUser)) {
+			System.out.println("Could not find sender here");
             return null;
         }
         if (! control.getControl().hasUser(toUser)) {
+			System.out.println("Could not findreciever here");
             Node node = control.getControl().findNode(toUser.getHostAlias());
             node.postAsync("/node/messages/", message);
-            return message;
+            return MessageManager.getInstance().createMessage(
+				message.getFromUsername(), 
+				message.getToUsername(), 
+				message.getSubject(), 
+				message.getText()
+			);
         }
 		return MessageManager.getInstance().createMessage(
 				message.getFromUsername(), 
