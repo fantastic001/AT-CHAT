@@ -38,6 +38,10 @@ public class MasterNode implements ControlInterface {
             current.post("/node/", node);
             node.postAsync("/nodes/", current);
         }
+        for (User user : UserManager.getInstance().getUsers()) {
+            node.postAsync("/users/register/", user);
+        }
+        node.postAsync("/users/loggedIn", UserManager.getInstance().getOnlineUsers());
         
         nodes.add(node);
        

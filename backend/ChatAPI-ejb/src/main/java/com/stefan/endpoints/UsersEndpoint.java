@@ -104,6 +104,7 @@ public class UsersEndpoint {
 	@Path("loggedIn")
 	@Produces("application/json")
 	public String submitLogedInUsers(Collection<User> users) {
+		System.out.println("Got new list of online users");
 		for (User user : users) {
 			// check if not logged in
 			boolean found = false; 
@@ -115,7 +116,17 @@ public class UsersEndpoint {
 					UserManager.getInstance().login(user);
 				}
 				catch (AuthErrorException e) {
-					return "ERROR";
+					System.out.println("AUTH: For some reason, user is not logged in but it cannot be logged again");
+					try {
+						Thread.sleep(5000);
+						UserManager.getInstance().login(user);
+					}
+					catch (InterruptedException ie) {
+						return "ERROR";
+					}
+					catch (AuthErrorException err) {
+						return "ERROR";
+					}
 				}
 			}
 		}
