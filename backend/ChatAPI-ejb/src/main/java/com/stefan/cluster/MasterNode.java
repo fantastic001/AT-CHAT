@@ -80,7 +80,18 @@ public class MasterNode implements ControlInterface {
 
             }
             catch (TimeoutException e) {
-                removal.add(node);
+                try {
+                    node.getAsync("/node/").get(1, TimeUnit.SECONDS);
+                }
+                catch (TimeoutException e2) {
+                    removal.add(node);
+                }
+                catch (ExecutionException e2) {
+                    removal.add(node);
+                }
+                catch (InterruptedException e2) {
+                    
+                }
             }
             catch (ExecutionException e) {
                 removal.add(node);
